@@ -8,6 +8,7 @@ use Practice\Comments\Block\CommentTemplate;
 $dateFormat = 'Y D, d M Y H:i:s';
 $comments = $block->getComments();
 $isCommentsEmpty = empty($comments);
+$commentUpdateUrl = $block->getUrl('comments/index/edit');
 ?>
 
 <a href="#">Add comment</a>
@@ -22,6 +23,7 @@ $isCommentsEmpty = empty($comments);
             <td>Comment</td>
             <td>Created at</td>
             <td>Last Revision</td>
+            <td>Actions</td>
         </tr>
         <?php foreach ($comments as $comment) : ?>
             <tr>
@@ -31,6 +33,14 @@ $isCommentsEmpty = empty($comments);
                 <td><?= $comment->getComment() ?></td>
                 <td><?= $comment->getCreatedAt()->format($dateFormat) ?></td>
                 <td><?= $comment->getUpdatedAt()->format($dateFormat) ?></td>
+                <td>
+                    <form action="<?= $commentUpdateUrl ?>" method="post">
+                        <label>
+                            <input type="text" name="id" hidden value="<?= $comment->getCommentId() ?>"/>
+                        </label>
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>

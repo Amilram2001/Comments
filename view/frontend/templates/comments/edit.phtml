@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+use Practice\Comments\Block\CommentTemplate;
+use Practice\Comments\Api\Data\CommentInterface;
+
+/** @var CommentTemplate $block */
+$dateFormat = 'Y D, d M Y H:i:s';
+/** @var CommentInterface $comment */
+$comment = $block->getCurrentComment();
+$updateUrl = $block->getUrl('comments/index/save');
+$listingUrl = $block->getUrl('comments/index/index');
+?>
+<?php if (!$comment): ?>
+    <p>Something happened! <a href="<?= $listingUrl ?>">Click here</a> to go back</p>
+    <?php ?>
+<?php else: ?>
+    <?php
+    $id = $comment->getCommentId();
+    $email = $comment->getAuthorEmail();
+    $author = $comment->getAuthorName();
+    $title = $comment->getCommentTitle();
+    $commentContent = $comment->getComment();
+    ?>
+    <form action="<?= $updateUrl ?>" method="post">
+        <label><input type="text" value="<?= $id ?>" name="comment_id" hidden/></label>
+        <label for="author_name">Author</label>
+        <input type="text" id="author_name" value="<?= $author ?>" name="author_name" required/>
+        <label for="author_email">Email</label>
+        <input type="email" id="author_email" name="author_email" value="<?= $email ?>" required/>
+        <label for="comment_title">Title</label>
+        <input type="text" id="comment_title" name="comment_title" value="<?= $title ?>" required/>
+        <label for="comment">Comment</label>
+        <textarea id="comment" name="comment"><?= $commentContent ?></textarea>
+        <button>Submit</button>
+        <button>Clear</button>
+    </form>
+<?php endif; ?>
