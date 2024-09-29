@@ -1,0 +1,16 @@
+{
+    "practice_comments": {
+        "column": {
+            "comment_id": true,
+            "author_name": true,
+            "author_email": true,
+            "comment_title": true,
+            "comment": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
