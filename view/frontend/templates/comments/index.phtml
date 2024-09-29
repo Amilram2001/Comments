@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+use Practice\Comments\Block\CommentTemplate;
+
+/** @var CommentTemplate $block */
+$dateFormat = 'Y D, d M Y H:i:s';
+$comments = $block->getComments();
+$isCommentsEmpty = empty($comments);
+?>
+
+<a href="#">Add comment</a>
+<?php if ($isCommentsEmpty) : ?>
+    <p>No comments found!</p>
+<?php else: ?>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Title</td>
+            <td>Comment</td>
+            <td>Created at</td>
+            <td>Last Revision</td>
+        </tr>
+        <?php foreach ($comments as $comment) : ?>
+            <tr>
+                <td><?= $comment->getAuthorName() ?></td>
+                <td><?= $comment->getAuthorEmail() ?></td>
+                <td><?= $comment->getCommentTitle() ?></td>
+                <td><?= $comment->getComment() ?></td>
+                <td><?= $comment->getCreatedAt()->format($dateFormat) ?></td>
+                <td><?= $comment->getUpdatedAt()->format($dateFormat) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>
