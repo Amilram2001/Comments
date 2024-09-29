@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="practice_comments" resource="default" engine="innodb" comment="Comments">
+        <column xsi:type="int" name="comment_id" padding="6" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="author_name" nullable="false" length="25" comment="Name"/>
+        <column xsi:type="varchar" name="author_email" nullable="false" length="25" comment="Email"/>
+        <column xsi:type="varchar" name="comment_title" nullable="false" length="50" comment="Comment Title"/>
+        <column xsi:type="varchar" name="comment" nullable="false" length="255" comment="Comment"/>
+        <column name="created_at" nullable="false" xsi:type="datetime" default="CURRENT_TIMESTAMP" on_update="false"/>
+        <column name="updated_at" nullable="true" xsi:type="datetime" default="CURRENT_TIMESTAMP" on_update="true"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="comment_id"/>
+        </constraint>
+    </table>
+</schema>
