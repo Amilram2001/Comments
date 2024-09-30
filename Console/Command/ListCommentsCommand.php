@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Practice\Comments\Console\Command;
 
+use Magento\Framework\Phrase;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputOption;
+use Practice\Comments\Api\Data\CommentInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Practice\Comments\Model\ResourceModel\Comment\CollectionFactory;
+use Practice\Comments\Api\CommentRepositoryInterface;
 
 class ListCommentsCommand extends Command
 {
-    private const int PAGE_SIZE_DEFAULT = 10;
-    private const string PAGE_SIZE = 'pageSize';
 
     public function __construct(
-        private readonly CollectionFactory $collectionFactory,
-        ?string                            $name = null
+        private readonly CommentRepositoryInterface $commentRepository,
+        ?string                                     $name = null
     ) {
         parent::__construct($name);
     }
@@ -26,21 +25,28 @@ class ListCommentsCommand extends Command
     {
         $this->setName('comments:list');
         $this->setDescription('Show comments');
-        $this->addOption(
-          self::PAGE_SIZE,
-          null,
-          InputOption::VALUE_OPTIONAL,
-          'Page size',
-        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commentSize = $input->getOption(self::PAGE_SIZE);
-        $commentSize = is_integer($commentSize) ? $commentSize : self::PAGE_SIZE_DEFAULT;
-        $collection = $this->collectionFactory->create();
-        $items = $collection->setPageSize($commentSize)->getItems();
-        var_dump($items);
-        return 0;
+        $comments = $this->commentRepository->getAll();
+        foreach ($comments as $comment) {
+            $output->writeln('<info>' . $this->getFormattedComments($comment) . '</info>');
+        }
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @param CommentInterface $comment
+     * @return Phrase
+     */
+    private function getFormattedComments(CommentInterface $comment): string
+    {
+        $originalComment = $comment->getComment();
+        $name = $comment->getAuthorName();
+        $title = $comment->getCommentTitle();
+        $createdAt = $comment->getCreatedAt();
+        $truncated =  strlen($originalComment) > 15 ? substr($originalComment, 0, 15) . '...' : $originalComment;
+        return sprintf("%s: '%s' commented '%s' with title '%s'", $createdAt->format('Y D, d M Y H:i:s'), $name, $truncated, $title);
     }
 }
