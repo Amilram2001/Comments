@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Practice\Comments\Console\Command;
 
-use Magento\Framework\Phrase;
 use Symfony\Component\Console\Command\Command;
 use Practice\Comments\Api\Data\CommentInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,15 +37,21 @@ class ListCommentsCommand extends Command
 
     /**
      * @param CommentInterface $comment
-     * @return Phrase
+     * @return string
      */
     private function getFormattedComments(CommentInterface $comment): string
     {
-        $originalComment = $comment->getComment();
+        $content = $comment->getComment();
         $name = $comment->getAuthorName();
         $title = $comment->getCommentTitle();
-        $createdAt = $comment->getCreatedAt();
-        $truncated =  strlen($originalComment) > 15 ? substr($originalComment, 0, 15) . '...' : $originalComment;
-        return sprintf("%s: '%s' commented '%s' with title '%s'", $createdAt->format('Y D, d M Y H:i:s'), $name, $truncated, $title);
+        $createdAt = $comment->getCreatedAt()->format('Y D, d M Y H:i:s');
+        $truncated =  strlen($content) > 15 ? substr($content, 0, 15) . '...' : $content;
+        return sprintf(
+            "%s: '%s' commented '%s' with title '%s'",
+            $createdAt,
+            $name,
+            $truncated,
+            $title
+        );
     }
 }
