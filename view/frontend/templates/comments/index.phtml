@@ -9,6 +9,7 @@ $dateFormat = 'Y D, d M Y H:i:s';
 $comments = $block->getComments();
 $isCommentsEmpty = empty($comments);
 $commentUpdateUrl = $block->getUrl('comments/index/edit');
+$commentDeleteUrl = $block->getUrl('comments/index/delete');
 ?>
 
 <a href="#">Add comment</a>
@@ -38,7 +39,13 @@ $commentUpdateUrl = $block->getUrl('comments/index/edit');
                         <label>
                             <input type="text" name="id" hidden value="<?= $comment->getCommentId() ?>"/>
                         </label>
-                        <button type="submit">Edit</button>
+                        <button class="action-transparent" type="submit">Edit</button>
+                    </form>
+                    <form action="<?= $commentDeleteUrl ?>" method="post">
+                        <label>
+                            <input type="text" name="id" hidden value="<?= $comment->getCommentId() ?>"/>
+                        </label>
+                        <button class="action-transparent" type="submit">Delete</button>
                     </form>
                 </td>
             </tr>
