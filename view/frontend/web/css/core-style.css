@@ -1,3 +1,16 @@
 tr, td, table {
     border: 1px solid rebeccapurple;
 }
+.action-transparent {
+    border: none;
+    background: none;
+    color: #0a6c9f;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+}
+
+.action-transparent:hover, .action-transparent:focus {
+    border: none;
+    background: none;
+    color: #0a4868;
+}
