@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="1column">
+    <head>
+        <css src="Practice_Comments::css/core-style.css"/>
+    </head>
+    <body>
+        <referenceBlock name="content">
+            <block class="Practice\Comments\Block\CommentTemplate"
+                   name="comments.create"
+                   template="Practice_Comments::comments/create.phtml"/>
+        </referenceBlock>
+    </body>
+</page>
