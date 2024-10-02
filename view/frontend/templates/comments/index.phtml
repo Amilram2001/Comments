@@ -10,9 +10,10 @@ $comments = $block->getComments();
 $isCommentsEmpty = empty($comments);
 $commentUpdateUrl = $block->getUrl('comments/index/edit');
 $commentDeleteUrl = $block->getUrl('comments/index/delete');
+$commentCreateUrl = $block->getUrl('comments/index/create');
 ?>
 
-<a href="#">Add comment</a>
+<a href="<?= $commentCreateUrl ?>">Add comment</a>
 <?php if ($isCommentsEmpty) : ?>
     <p>No comments found!</p>
 <?php else: ?>
