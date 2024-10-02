@@ -38,7 +38,7 @@ class Comment extends AbstractModel implements CommentInterface
     public function beforeSave(): Comment|static
     {
         parent::beforeSave();
-        if ($this->isObjectNew() && !$this->getCreatedAt()) {
+        if ($this->isObjectNew()) {
             $this->setData(self::CREATED_AT , $this->datetime->formatDate(true));
         }
         $this->setData(self::UPDATED_AT, $this->datetime->formatDate(true));
