@@ -23,4 +23,10 @@
     <!-- Preference for CommentRepository -->
     <preference for="Practice\Comments\Api\CommentRepositoryInterface"
                 type="Practice\Comments\Repository\CommentRepository"/>
+
+    <!-- Intercept Controllers -->
+    <type name="Practice\Comments\Controller\Index\Edit">
+        <plugin name="practice_comments_comments_edit"
+                type="Practice\Comments\Plugin\CommentEditPlugin"/>
+    </type>
 </config>
