@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+use Practice\Comments\Block\CommentTemplate;
+
+/** @var CommentTemplate $block */
+$createUrl = $block->getUrl('comments/index/create');
+?>
+<form action="<?= $createUrl ?>" method="post">
+    <label for="author_name">Author</label>
+    <input type="text" id="author_name" name="author_name" required/>
+    <label for="author_email">Email</label>
+    <input type="email" id="author_email" name="author_email" required/>
+    <label for="comment_title">Title</label>
+    <input type="text" id="comment_title" name="comment_title" required/>
+    <label for="comment">Comment</label>
+    <textarea id="comment" name="comment"></textarea>
+    <button>Submit</button>
+    <button>Clear</button>
+</form>

@@ -34,4 +34,9 @@
         <plugin name="practice_comments_comments_save"
                 type="Practice\Comments\Plugin\CommentSavePlugin"/>
     </type>
+
+    <type name="Practice\Comments\Controller\Index\Create">
+        <plugin name="practice_comments_comments_create"
+                type="Practice\Comments\Plugin\CommentCreatePlugin"/>
+    </type>
 </config>
