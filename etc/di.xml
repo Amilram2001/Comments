@@ -29,4 +29,9 @@
         <plugin name="practice_comments_comments_edit"
                 type="Practice\Comments\Plugin\CommentEditPlugin"/>
     </type>
+
+    <type name="Practice\Comments\Controller\Index\Save">
+        <plugin name="practice_comments_comments_save"
+                type="Practice\Comments\Plugin\CommentSavePlugin"/>
+    </type>
 </config>
