@@ -6,11 +6,13 @@ namespace Practice\Comments\Controller\Index;
 
 use Psr\Log\LoggerInterface;
 use Magento\Framework\App\RequestInterface;
+use Practice\Comments\Config\ControllerInfo;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Practice\Comments\Api\CommentRepositoryInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
 use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
 
 class Delete implements HttpPostActionInterface
@@ -19,6 +21,7 @@ class Delete implements HttpPostActionInterface
         private readonly LoggerInterface            $logger,
         private readonly RedirectFactory            $redirectFactory,
         private readonly RequestInterface           $request,
+        private readonly EventManagerInterface      $eventManager,
         private readonly MessageManagerInterface    $messageManager,
         private readonly CommentRepositoryInterface $commentRepository
     ) { }
@@ -37,6 +40,7 @@ class Delete implements HttpPostActionInterface
             $this->messageManager->addErrorMessage('There was an error with the request. Please refresh the page and try again.');
             return $redirect->setRefererUrl();
         }
+        $this->eventManager->dispatch(ControllerInfo::EVENT_DELETE_COMMENT, ['comment_id' => $id]);
         $this->logger->info('Comment with id ' . $id . ' was successfully deleted');
         $this->messageManager->addSuccessMessage('Successfully deleted the comment!');
         return $redirect->setRefererUrl();
