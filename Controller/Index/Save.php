@@ -14,6 +14,7 @@ use Practice\Comments\Api\CommentRepositoryInterface;
 use Magento\Framework\Message\Manager as MessageManager;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
 
 class Save implements HttpPostActionInterface
 {
@@ -22,6 +23,7 @@ class Save implements HttpPostActionInterface
         private readonly LoggerInterface            $logger,
         private readonly RedirectFactory            $redirectFactory,
         private readonly RequestInterface           $request,
+        private readonly EventManagerInterface      $eventManager,
         private readonly CommentRepositoryInterface $commentRepository
     ) { }
 
@@ -53,6 +55,7 @@ class Save implements HttpPostActionInterface
             $this->logger->debug($errorMessage);
             return $this->redirectFactory->create()->setRefererUrl();
         }
+        $this->eventManager->dispatch(ControllerInfo::EVENT_UPDATE_COMMENT, ['comment' => $comment]);
         $this->messageManager->addSuccessMessage(__('Comment has been saved.'));
         return $this->redirectFactory->create()->setPath(ControllerInfo::COMMENTS_CONTROLLER_LIST_URI);
     }
